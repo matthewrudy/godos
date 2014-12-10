@@ -2,6 +2,7 @@ package models
 
 // Todo is a todo item, it has a title and a completed status
 type Todo struct {
+	Id          string `json:"id"`
 	Title       string `json:"title"`
 	IsCompleted bool   `json:"isCompleted"`
 }
