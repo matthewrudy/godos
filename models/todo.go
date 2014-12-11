@@ -7,12 +7,12 @@ type Todo struct {
 	IsCompleted bool   `json:"isCompleted"`
 }
 
-// find a Todo
+// FindByID finds a single Todo by its ID
 func FindByID(id string) *Todo {
 	return makeTodo(id)
 }
 
-// find all
+// FindAll finds all Todos
 func FindAll() []*Todo {
 	return []*Todo{
 		makeTodo("alpha"),
