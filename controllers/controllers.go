@@ -12,16 +12,13 @@ package controllers
 
 import (
 	"github.com/go-martini/martini"
-)
-
-const (
-	VERSION = "0.0.0"
+	"github.com/matthewrudy/godos/shared"
 )
 
 // Handler handles all routes for our app
 func Handler(m martini.Router) {
 	m.Group("/todos", todosHandler)
 	m.Get("", func() string {
-		return "Godos VERSION " + VERSION
+		return "Godos VERSION " + shared.VERSION
 	})
 }
