@@ -48,7 +48,7 @@ func newTodoList(todos []*models.Todo) *todoList {
 
 func randomTodo(id string) *models.Todo {
 	return &models.Todo{
-		Id:          id,
+		ID:          id,
 		Title:       "Todo task: " + id,
 		IsCompleted: false,
 	}
