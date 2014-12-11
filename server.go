@@ -1,3 +1,7 @@
+// Godos is a Golang implementation of a Todo list service
+// it implements basic CRUD for Todos
+// designed to match the famous TodoMVC brand of javascript app
+//
 package main
 
 import (
