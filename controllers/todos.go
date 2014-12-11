@@ -8,36 +8,40 @@ import (
 
 func todosHandler(m martini.Router) {
 	m.Get("", indexTodos)
-	m.Post("/complete", func() string {
-		completeTodo(helloWorldTodo)
-		return "OK"
-	})
 	m.Get("/:id", showTodo)
+	m.Post("/:id/complete", completeTodo)
 }
 
 func showTodo(r render.Render, p martini.Params) {
-	id := p["id"]
-	renderTodos(r, randomTodo(id))
+	todo := models.FindByID(idParam(p))
+	renderTodo(r, todo)
+}
+
+func completeTodo(r render.Render, p martini.Params) {
+	todo := models.FindByID(idParam(p))
+	todo.Complete()
+	renderTodo(r, todo)
+}
+
+func idParam(p martini.Params) string {
+	return p["id"]
 }
 
 func indexTodos(r render.Render) {
-	// 3 random todos
-	renderTodos(r, helloWorldTodo, helloWorldTodo, helloWorldTodo)
+	todos := models.FindAll()
+	renderTodos(r, todos)
+}
+
+func renderTodo(r render.Render, todo *models.Todo) {
+	renderTodos(r, []*models.Todo{todo})
+}
+
+func renderTodos(r render.Render, todos []*models.Todo) {
+	r.JSON(200, newTodoList(todos))
 }
 
 type todoList struct {
 	Todos []*models.Todo `json:"todos"`
-}
-
-type renderer func(render.Render)
-
-func renderTodos(r render.Render, todos ...*models.Todo) {
-	r.JSON(200, newTodoList(todos))
-}
-
-func completeTodo(todo *models.Todo) *models.Todo {
-	todo.Complete()
-	return todo
 }
 
 func newTodoList(todos []*models.Todo) *todoList {
@@ -45,13 +49,3 @@ func newTodoList(todos []*models.Todo) *todoList {
 		Todos: todos,
 	}
 }
-
-func randomTodo(id string) *models.Todo {
-	return &models.Todo{
-		ID:          id,
-		Title:       "Todo task: " + id,
-		IsCompleted: false,
-	}
-}
-
-var helloWorldTodo = randomTodo("hello")

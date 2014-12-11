@@ -7,6 +7,20 @@ type Todo struct {
 	IsCompleted bool   `json:"isCompleted"`
 }
 
+// find a Todo
+func FindByID(id string) *Todo {
+	return makeTodo(id)
+}
+
+// find all
+func FindAll() []*Todo {
+	return []*Todo{
+		makeTodo("alpha"),
+		makeTodo("beta"),
+		makeTodo("gamma"),
+	}
+}
+
 // Complete makes a Todo complete
 func (todo *Todo) Complete() {
 	todo.IsCompleted = true
@@ -15,4 +29,12 @@ func (todo *Todo) Complete() {
 // Uncomplete makes a Todo no longer complete
 func (todo *Todo) Uncomplete() {
 	todo.IsCompleted = false
+}
+
+func makeTodo(id string) *Todo {
+	return &Todo{
+		ID:          id,
+		Title:       "Todo task: " + id,
+		IsCompleted: false,
+	}
 }
