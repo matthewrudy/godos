@@ -16,13 +16,16 @@ func (todo *Todo) String() string {
 	return fmt.Sprintf("Todo#%s", todo.ID)
 }
 
+type Todos struct {
+}
+
 // FindByID finds a single Todo by its ID
-func FindByID(id string) *Todo {
+func (t *Todos) FindByID(id string) *Todo {
 	return makeTodo(id)
 }
 
 // FindAll finds all Todos
-func FindAll() []*Todo {
+func (t *Todos) FindAll() []*Todo {
 	return []*Todo{
 		makeTodo("alpha"),
 		makeTodo("beta"),

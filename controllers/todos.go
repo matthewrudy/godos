@@ -13,12 +13,12 @@ func todosHandler(m martini.Router) {
 }
 
 func showTodo(r render.Render, p martini.Params) {
-	todo := models.FindByID(idParam(p))
+	todo := models.Register().Todos.FindByID(idParam(p))
 	renderTodo(r, todo)
 }
 
 func completeTodo(r render.Render, p martini.Params) {
-	todo := models.FindByID(idParam(p))
+	todo := models.Register().Todos.FindByID(idParam(p))
 	todo.Complete()
 	renderTodo(r, todo)
 }
@@ -28,7 +28,7 @@ func idParam(p martini.Params) string {
 }
 
 func indexTodos(r render.Render) {
-	todos := models.FindAll()
+	todos := models.Register().Todos.FindAll()
 	renderTodos(r, todos)
 }
 
