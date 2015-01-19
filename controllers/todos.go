@@ -6,18 +6,21 @@ import (
 	"github.com/matthewrudy/godos/models"
 )
 
-func todosHandler(m martini.Router) {
-	m.Get("", indexTodos)
-	m.Get("/:id", showTodo)
-	m.Post("/:id/complete", completeTodo)
+type Todos struct {
 }
 
-func showTodo(r render.Render, p martini.Params) {
+func (t *Todos) Handle(m martini.Router) {
+	m.Get("", t.index)
+	m.Get("/:id", t.show)
+	m.Post("/:id/complete", t.complete)
+}
+
+func (t *Todos) show(r render.Render, p martini.Params) {
 	todo := models.Register().Todos.FindByID(idParam(p))
 	renderTodo(r, todo)
 }
 
-func completeTodo(r render.Render, p martini.Params) {
+func (t *Todos) complete(r render.Render, p martini.Params) {
 	todo := models.Register().Todos.FindByID(idParam(p))
 	todo.Complete()
 	renderTodo(r, todo)
@@ -27,7 +30,7 @@ func idParam(p martini.Params) string {
 	return p["id"]
 }
 
-func indexTodos(r render.Render) {
+func (t *Todos) index(r render.Render) {
 	todos := models.Register().Todos.FindAll()
 	renderTodos(r, todos)
 }

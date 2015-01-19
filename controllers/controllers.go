@@ -17,7 +17,7 @@ import (
 
 // Handler handles all routes for our app
 func Handler(m martini.Router) {
-	m.Group("/todos", todosHandler)
+	m.Group("/todos", (&Todos{}).Handle)
 	m.Get("", func() string {
 		return "Godos VERSION " + shared.VERSION
 	})
