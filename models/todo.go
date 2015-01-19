@@ -1,10 +1,19 @@
 package models
 
+import (
+	"fmt"
+)
+
 // Todo is a todo item, it has a title and a completed status
 type Todo struct {
 	ID          string `json:"id"`
 	Title       string `json:"title"`
 	IsCompleted bool   `json:"isCompleted"`
+}
+
+// String returns a human readable string
+func (todo *Todo) String() string {
+	return fmt.Sprintf("Todo#%s", todo.ID)
 }
 
 // FindByID finds a single Todo by its ID
